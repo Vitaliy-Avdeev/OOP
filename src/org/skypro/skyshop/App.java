@@ -57,7 +57,7 @@ public class App {
         Searchable[] searchResults = searchEngine.search("PRODUCT");
         for (Searchable result : searchResults) {
             if (result == null) continue;
-            System.out.println(result);
+            System.out.println(result.getStringRepresentation());
         }
         System.out.println();
 
@@ -71,13 +71,33 @@ public class App {
         searchResults = searchEngine.search("Кола");
         for (Searchable result : searchResults) {
             if (result == null) continue;
-            System.out.println(result);
+            System.out.println(result.getSearchTerm());
         }
         System.out.println();
 
+
+        System.out.println("\n=== Система поиска и создания исключений ===\n");
+
+
+        DiscountedProduct[] discountedProducts = new DiscountedProduct[2];
+        {
+            DiscountedProduct discountedProduct1 = new DiscountedProduct("Картофель", 278.0, 18);
+            DiscountedProduct discountedProduct2 = new DiscountedProduct("Пицца", 658., 20);
+        }
+        try {
+            DiscountedProduct[] discountedProduct;
+            System.out.println("Исключение не выброшено");
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println("Ошибка <IllegalArgumentException> ");
+        } finally {
+            System.out.println("Проверка завершена");
+        }
+        searchEngine.countingIncomingElements(" ", " ");
+        for (Searchable count : searchResults) {
+            if (count == null) continue;
+            System.out.println(count);
+        }
     }
+
 }
-
-
-
 

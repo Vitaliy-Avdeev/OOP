@@ -18,18 +18,27 @@ public class SearchEngine {
         }
     }
 
-    public Searchable[] search(String searchTerm) {
+    public Searchable[] search(String search) {
         int countResult = 0;
-        Searchable[] result = new Searchable[5];
-        for (int i = 0; i < count; i++) {
-            if (searchables[i].getSearchTerm().contains(searchTerm)) {
-                result[countResult++] = searchables[i];
+        Searchable[] result = null;
+        for (Searchable searchable : searchables) {
+            int score = countingIncomingElements(searchable.getSearchTerm(), search);
+            if (searchable != null && score > countResult) {
+                countResult = score;
+                result = new Searchable[]{searchable};
             }
             if (countResult == 5) break;
         }
         return result;
     }
+
+    public int countingIncomingElements(String str, String substr) {
+        int count = 0;
+        for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()) {
+            count++;
+        }
+        return count;
+    }
+
 }
-
-
 
