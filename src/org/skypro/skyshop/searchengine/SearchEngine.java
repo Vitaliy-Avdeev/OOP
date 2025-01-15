@@ -1,5 +1,6 @@
 package org.skypro.skyshop.searchengine;
 
+import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.interfaces.Searchable;
 
 public class SearchEngine {
@@ -18,17 +19,28 @@ public class SearchEngine {
         }
     }
 
-    public Searchable[] search(String search) {
-        int countResult = 0;
-        Searchable[] result = null;
+    public Searchable[] search(String searchTerm) {
+        int countResults = 0;
+        Searchable[] results = new Searchable[5];
+        for (int i = 0; i < count; i++) {
+            if (searchables[i].getSearchTerm().contains(searchTerm))  {
+                results[countResults++] = searchables[i];
+            }
+            if (countResults == 5) break;
+        }
+        return results;
+    }
+    public  Searchable getSearchBestMatch(String search) throws BestResultNotFound {
+        int maxScore = 0;
+        Searchable result = null;
         for (Searchable searchable : searchables) {
             int score = countingIncomingElements(searchable.getSearchTerm(), search);
-            if (searchable != null && score > countResult) {
-                countResult = score;
-                result = new Searchable[]{searchable};
+            if (searchable != null && score > maxScore) {
+                maxScore = score;
+                result = searchable;
             }
-            if (countResult == 5) break;
         }
+        if (result == null) throw new BestResultNotFound("Для " + search + " запроса не нашлось");
         return result;
     }
 

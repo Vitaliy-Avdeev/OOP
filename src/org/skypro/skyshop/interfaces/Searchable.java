@@ -11,4 +11,8 @@ public interface Searchable {
         return "Имя объекта - " + getName() + " — Тип объекта - " + getType();
 
     }
+    default String getMostSimilarElement() {
+        return getSearchTerm();
+    }
+
 }
