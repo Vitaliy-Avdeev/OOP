@@ -3,34 +3,27 @@ package org.skypro.skyshop.searchengine;
 import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.interfaces.Searchable;
 
+import java.util.ArrayList;
+
 public class SearchEngine {
-    private int count = 0;
-    private Searchable[] searchables;
+    ArrayList<Searchable> searchables;
 
-    public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
+    public SearchEngine() {
+        searchables = new ArrayList<>();
     }
-
     public void add(Searchable searchable) {
-        if (count >= searchables.length) {
-            System.out.println(" Добавить объект невозможно! ");
-        } else {
-            searchables[count++] = searchable;
-        }
+        searchables.add(searchable);
     }
-
-    public Searchable[] search(String searchTerm) {
-        int countResults = 0;
-        Searchable[] results = new Searchable[5];
-        for (int i = 0; i < count; i++) {
-            if (searchables[i].getSearchTerm().contains(searchTerm))  {
-                results[countResults++] = searchables[i];
+    public ArrayList<Searchable> search(String searchTerm) {
+        ArrayList<Searchable> results = new ArrayList<>();
+        for (Searchable searchable : searchables) {
+            if (searchable.getSearchTerm().contains(searchTerm)) {
+                results.add(searchable);
             }
-            if (countResults == 5) break;
         }
         return results;
     }
-    public  Searchable getSearchBestMatch(String search) throws BestResultNotFound {
+    public Searchable getSearchBestMatch(String search) throws BestResultNotFound {
         int maxScore = 0;
         Searchable result = null;
         for (Searchable searchable : searchables) {
@@ -43,7 +36,6 @@ public class SearchEngine {
         if (result == null) throw new BestResultNotFound("Для " + search + " запроса не нашлось");
         return result;
     }
-
     public int countingIncomingElements(String str, String substr) {
         int count = 0;
         for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()) {
@@ -51,6 +43,7 @@ public class SearchEngine {
         }
         return count;
     }
-
 }
+
+
 
