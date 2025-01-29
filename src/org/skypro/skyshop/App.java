@@ -14,7 +14,6 @@ import org.skypro.skyshop.searchengine.SearchEngine;
 public class App {
     public App() {
     }
-
     public static void main(String[] args) {
         SimpleProduct product1 = new SimpleProduct("Коктель", (double) 80.0F);
         SimpleProduct product2 = new SimpleProduct("Роллы", (double) 560.0F);
@@ -22,13 +21,16 @@ public class App {
         DiscountedProduct product4 = new DiscountedProduct("Картофель", (double) 278.0F, 18);
         FixPriceProduct product5 = new FixPriceProduct("Кола");
         SimpleProduct product6 = new SimpleProduct("Напиток", (double) 45.0F);
+
         ProductBasket basket = new ProductBasket();
+
         basket.addProduct(product1);
         basket.addProduct(product2);
         basket.addProduct(product3);
         basket.addProduct(product4);
         basket.addProduct(product5);
         basket.addProduct(product6);
+
         System.out.println("\n===Список товаров===\n");
 
         basket.printBasket();
@@ -78,33 +80,24 @@ public class App {
         searchEngine.add(article3);
         searchEngine.add(article4);
 
-
-        Map<String, ArrayList<Searchable>> searchResults = searchEngine.search("PRODUCT");
-        for (Map.Entry<String, ArrayList<Searchable>> entry : searchResults.entrySet()) {
-            for (Searchable results : entry.getValue()) {
-                if (results == null) continue;
-                System.out.println(results);
-            }
-            System.out.println();
+        Map<String, Searchable> searchResults = searchEngine.search("PRODUCT");
+        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
+            if (entry == null) continue;
+            System.out.println(entry);
         }
-
+        System.out.println();
 
         searchResults = searchEngine.search("ARTICLE");
-        for (Map.Entry<String, ArrayList<Searchable>> entry : searchResults.entrySet()) {
-            for (Searchable results : entry.getValue()) {
-                if (results == null) continue;
-                System.out.println(results);
-            }
-            System.out.println();
+        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
+            if (entry == null) continue;
+            System.out.println(entry);
         }
-        searchResults = searchEngine.search("Кола");
-        for (Map.Entry<String, ArrayList<Searchable>> entry : searchResults.entrySet()) {
-            for (Searchable results : entry.getValue()) {
-                if (results == null) continue;
-                System.out.println(results);
+        System.out.println();
 
-            }
-            System.out.println();
+        searchResults = searchEngine.search("Кола");
+        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
+            if (entry == null) continue;
+            System.out.println(entry);
         }
 
         System.out.println("\n=== Система поиска и создания исключений ===\n");

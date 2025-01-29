@@ -15,12 +15,11 @@ public class SearchEngine {
     public void add(Searchable searchable) {
         searchables.add(searchable);
     }
-
-    public Map<String, ArrayList<Searchable>> search(String searchTerm) {
-        Map<String, ArrayList<Searchable>> results = new HashMap<>();
+    public Map<String, Searchable> search(String searchTerm) {
+        Map<String, Searchable> results = new HashMap<>();
         for (Searchable searchable : searchables) {
             if (searchable.getSearchTerm().contains(searchTerm)) {
-                results.computeIfAbsent(searchable.getType(), k -> new ArrayList<>()).add(searchable);
+                results.putIfAbsent(searchable.getStringRepresentation(), searchable);
             }
         }
         return results;

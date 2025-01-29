@@ -8,11 +8,7 @@ public interface Searchable {
     String getName();
 
     default String getStringRepresentation() {
-        return "Имя объекта - " + getName() + " — Тип объекта - " + getType();
+        return " <\"Имя объекта - " + getName() + " \"> <\" Тип объекта - " + getType() + "\">";
 
     }
-    default String getMostSimilarElement() {
-        return getSearchTerm();
-    }
-
 }
