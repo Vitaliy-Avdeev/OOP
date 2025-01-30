@@ -39,7 +39,7 @@ public class App {
 
         var removedProducts = basket.removeProduct("Картофель");
         basket.printBasket();
-        System.out.println("Удаленные товары: " + String.valueOf(removedProducts));
+        System.out.println("Удаленные товары: " + removedProducts);
 
         System.out.println("\n===Список товаров===\n");
 
@@ -80,24 +80,24 @@ public class App {
         searchEngine.add(article3);
         searchEngine.add(article4);
 
-        Map<String, Searchable> searchResults = searchEngine.search("PRODUCT");
-        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
-            if (entry == null) continue;
-            System.out.println(entry);
+        Set<Searchable> searchResults = searchEngine.search("PRODUCT");
+        for (Searchable results : searchResults) {
+            if (results == null) continue;
+            System.out.println(results);
         }
         System.out.println();
 
         searchResults = searchEngine.search("ARTICLE");
-        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
-            if (entry == null) continue;
-            System.out.println(entry);
+        for (Searchable results : searchResults) {
+            if (results == null) continue;
+            System.out.println(results);
         }
         System.out.println();
 
         searchResults = searchEngine.search("Кола");
-        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
-            if (entry == null) continue;
-            System.out.println(entry);
+        for (Searchable results : searchResults) {
+            if (results == null) continue;
+            System.out.println(results);
         }
 
         System.out.println("\n=== Система поиска и создания исключений ===\n");
@@ -108,33 +108,28 @@ public class App {
         } catch (IllegalArgumentException e) {
             System.out.println("\"Ошибка - цена меньше одного\"");
         }
-
         try {
             new DiscountedProduct("", (double) 278.0F, 18);
             System.out.println("Исключение не выброшено");
         } catch (IllegalArgumentException e) {
             System.out.println("\"Ошибка - не введен продукт\"");
         }
-
         try {
             new DiscountedProduct("Пицца", (double) 658.0F, 120);
             System.out.println("Исключение не выброшено");
         } catch (IllegalArgumentException e) {
             System.out.println("\"Ошибка - скидка меньше ноля или больше ста процентов\"");
         }
-
         try {
             System.out.println(searchEngine.getSearchBestMatch("Го"));
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
-
         try {
             System.out.println(searchEngine.getSearchBestMatch("2"));
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
-
     }
 }
 
